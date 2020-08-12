@@ -8,7 +8,7 @@ import Alert from './components/layout/Alert';
 import About from './components/pages/About';
 import axios from 'axios';
 
-import GithubState from './contest/github/githubState'
+import GithubState from './context/github/githubState'
 
 import './App.css';
 
@@ -19,26 +19,12 @@ const App =()=> {
   const[loading, setLoading] = useState(false);
   const[alert, setAlert] = useState(null);
 
-
-
- 
-
-  //Search Github users
-  const searchUsers = async text =>{
-    setLoading(true);
-    const res = await axios.get(`https://api.github.com/search/users?q=${text}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}}`);
-
-    setUsers(res.data.items);
-    setLoading(false);
-  }
-
-  //Get single Github user
   const  getUser = async (username) =>{
-    setLoading(true);
+    setLoading();
     const res = await axios.get(`https://api.github.com/users/${username}?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}}`);
 
-    setUser(res.data);
-    setLoading(false);
+ setUser(res.data);
+ setLoading(false);
 
   }
 
@@ -78,7 +64,7 @@ const App =()=> {
          <Switch>
           <Route exact path='/' render={props=> (
             <Fragment>
-                 <Search searchUsers={searchUsers} 
+                 <Search 
                   clearUsers={clearUsers} 
                   showClear={users.length >0 ? true: false} 
                   setAlert={showAlert}/>
