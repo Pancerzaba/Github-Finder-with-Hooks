@@ -25,11 +25,17 @@ export default (state, action) => {
                     users: [],
                     loading: false
                 };
-        case SET_LOADING:
-            return{
-                ...state,
-                loading: true
-            };
+            case GET_REPOS:
+                return{
+                    ...state,
+                    repos: action.payload,
+                    loading: false
+                }
+            case SET_LOADING:
+                return{
+                    ...state,
+                    loading: true
+                };
         default:
             return state;
     }
